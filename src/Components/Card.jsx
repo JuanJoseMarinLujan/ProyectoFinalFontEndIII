@@ -1,3 +1,5 @@
+import Dentist from "../Routes/Dentist";
+import Favs from "../Routes/Favs";
 import styles from "./Card.module.css";
 
 const Card = () => {
@@ -18,6 +20,7 @@ const Card = () => {
           <a href={`/dentist/MatriculaDoDentista`}>
             <h5 className={`card-title ${styles.title}`}>Nome e Sobrenome do dentista</h5>
           </a>
+          {/*<p className="card-text">{Dentist?.username}</p>*/}
         </div>
       </div>
     </>

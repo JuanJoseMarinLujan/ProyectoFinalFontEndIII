@@ -1,13 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ScheduleFormModal from "./ScheduleFormModal";
 import styles from "./DetailCard.module.css";
+import { useParams } from "react-router-dom";
 
 const DetailCard = () => {
-
+  const { id } = useParams();
+  const [dentista, setDentist] = useState(undefined);
+  
   useEffect(() => {
     //Nesse useEffect, você vai fazer um fetch na api passando o 
     //id do dentista que está vindo do react-router e carregar os dados em algum estado
-  }, []);
+    async function fetchData() {
+      fetch(`https://jsonplaceholder.typicode.com/users=${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setDentist(data);
+        });
+    }
+    fetchData();
+  }, [id]);
+
+
+
   return (
     //As instruções que estão com {''} precisam ser 
     //substituídas com as informações que vem da api
