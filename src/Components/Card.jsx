@@ -1,7 +1,13 @@
+import React, { useState } from "react";
 import styles from "./Card.module.css";
 
-const Card = () => {
+const Card = ({ Dentist }) => {
+  const [fav, setFav] = useState([]);
 
+  function handleClick() {
+    setFav([...fav, Dentist]);
+    localStorage.setItem("favs", JSON.stringify(fav));
+  }
   return (
     <>
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
@@ -15,9 +21,11 @@ const Card = () => {
         <div className={`card-body ${styles.CardBody}`}>
           {/* Na linha seguinte o link deverá utilizar a matricula, nome e sobrenome do dentista
           que vem da API */}
-          <a href={`/dentist/MatriculaDoDentista`}>
-            <h5 className={`card-title ${styles.title}`}>Nome e Sobrenome do dentista</h5>
+          <a href={`/dentist/${Dentist.id}`}>
+            <h5 className={`card-title ${styles.title}`}>{Dentist.name}</h5>
           </a>
+          <p>{Dentist.username}</p>
+          <button onClick={handleClick}>⭐</button>
         </div>
       </div>
     </>
