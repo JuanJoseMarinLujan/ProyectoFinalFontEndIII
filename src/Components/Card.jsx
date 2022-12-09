@@ -1,21 +1,20 @@
 import React from "react";
 import styles from "./Card.module.css";
 
-import { useContextGlobal } from "../Context/ContextGlobal";
-
 const Card = ({ Dentist }) => {
-  const { getDataFavsDentistList, favoritos, deleteFav } = useContextGlobal();
-
   function handleClickFav() {
-    getDataFavsDentistList(Dentist.id);
-  }
-
-  function handleClickDelete() {
-    deleteFav(Dentist.id);
-  }
-
-  function isFavorite(id) {
-    return favoritos.include(id) ? true : false;
+    if (localStorage.getItem('favs')) {
+      let localStrg = JSON.parse(localStorage.getItem('favs'));
+      if (localStrg.find((e) => e.id === Dentist.id)) {
+        return
+      } else {
+        localStrg.push(Dentist);
+        localStorage.setItem('favs', JSON.stringify(localStrg));
+      }
+      console.log(localStrg);
+    } else {
+      localStorage.setItem('favs', JSON.stringify([Dentist]));
+    }
   }
 
   return (
@@ -31,7 +30,7 @@ const Card = ({ Dentist }) => {
             <h5 className={`card-title ${styles.title}`}>{Dentist.name}</h5>
           </a>
           <p>{Dentist.username}</p>
-          {isFavorite ? <button onClick={() => handleClickFav()}>⭐</button> : <button onClick={() => handleClickDelete()}>❎</button> }
+          <button onClick={handleClickFav}>⭐</button>
         </div>
       </div>
     </>

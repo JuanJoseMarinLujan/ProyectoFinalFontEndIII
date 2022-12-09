@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../Components/Card";
 
-import { useContextGlobal } from "../Context/ContextGlobal";
-
 function Favs() {
-  const { favoritos } = useContextGlobal();
-  
+  const [favs, setFavs] = useState([]);
+
+  useEffect(() => {
+    const localStrg = JSON.parse(localStorage.getItem("favs"));
+    setFavs(localStrg);
+  }, []);
+
   return (
     <>
       <h1>Favs</h1>
       <div className="card-grid container">
-        {favoritos.map((fav) => {
-          return <Card Dentist={fav} key={fav.id} />;
+        {favs.map((fav) => {
+          return <Card Dentist={fav} key={fav.id + 1000000} />;
         })}
       </div>
     </>
