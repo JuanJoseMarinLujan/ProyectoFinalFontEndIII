@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import styles from "./Form.module.css";
+import styles from "../Components/Form.module.css";
 
 const LoginForm = () => {
   const [handler, setHandler] = useState(false);
   const [estado, setEstado] = useState({ name: "", email: "" });
   const handleSubmit = (e) => {
     e.preventDefault();
-    estado.name.length > 5 ? setHandler(true) : setHandler(false);    
+    estado.name.length > 5 ? setHandler(true) : setHandler(false);
   };
 
   function inputManager(e) {
@@ -44,8 +44,13 @@ const LoginForm = () => {
         </div>
       </div>
       <div>
-        {handler ? <h5>Gracias {estado.name}, te contactaremos cuanto antes via email.</h5> : <h5>Valida los datos</h5>}
-        
+        {handler ? (
+          <h5>
+            Gracias {estado.name}, te contactaremos cuanto antes via email.
+          </h5>
+        ) : (
+          <h5>Valida los datos</h5>
+        )}
       </div>
     </>
   );

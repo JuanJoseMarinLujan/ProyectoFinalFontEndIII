@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Card.module.css";
 
-const Card = ({ Dentist }) => {
-  const [fav, setFav] = useState([]);
+import { useContextGlobal } from "../Context/ContextGlobal";
 
-  function handleClick() {
-    setFav([...fav, Dentist]);
-    localStorage.setItem("favs", JSON.stringify(fav));
+const Card = ({ Dentist }) => {
+  const { getDataFavsDentistList, favoritos, deleteFav } = useContextGlobal();
+
+  function handleClickFav() {
+    getDataFavsDentistList(Dentist.id);
   }
+
+  function handleClickDelete() {
+    deleteFav(Dentist.id);
+  }
+
+  function isFavorite(id) {
+    return favoritos.include(id) ? true : false;
+  }
+
   return (
     <>
-      {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-        // está em dark mode e deverá utilizar o css correto */}
       <div className={`card`}>
         <img
           className="card-img-top"
@@ -19,13 +27,11 @@ const Card = ({ Dentist }) => {
           alt="doctor placeholder"
         />
         <div className={`card-body ${styles.CardBody}`}>
-          {/* Na linha seguinte o link deverá utilizar a matricula, nome e sobrenome do dentista
-          que vem da API */}
           <a href={`/dentist/${Dentist.id}`}>
             <h5 className={`card-title ${styles.title}`}>{Dentist.name}</h5>
           </a>
           <p>{Dentist.username}</p>
-          <button onClick={handleClick}>⭐</button>
+          {isFavorite ? <button onClick={() => handleClickFav()}>⭐</button> : <button onClick={() => handleClickDelete()}>❎</button> }
         </div>
       </div>
     </>

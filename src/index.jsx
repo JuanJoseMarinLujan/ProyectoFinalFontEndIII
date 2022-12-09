@@ -6,24 +6,27 @@ import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import App from "./App";
-import LoginForm from "./Components/LoginForm";
+import LoginForm from "./Routes/LoginForm";
 import Favs from "./Routes/Favs";
 import Home from "./Routes/Home";
 import DetailCard from "./Components/DetailCard";
 
+import ContextProvider from "./Context/ContextGlobal";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-//Lembre-se de configurar suas rotas e seu contexto aqui
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="/home" element={<Home />} />
-          <Route path="/contacto" element={<LoginForm />} />
-          <Route path="/favoritos" element={<Favs />} />
-          <Route path="/dentist/:id" element={<DetailCard />} />
-        </Route>
-      </Routes>
+      <ContextProvider>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/contacto" element={<LoginForm />} />
+            <Route path="/favoritos" element={<Favs />} />
+            <Route path="/dentist/:id" element={<DetailCard />} />
+          </Route>
+        </Routes>
+      </ContextProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
