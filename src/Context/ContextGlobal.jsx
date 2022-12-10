@@ -1,10 +1,5 @@
 import axios from "axios";
-import {
-  useEffect,
-  createContext,
-  useContext,
-  useReducer,
-} from "react";
+import { useEffect, createContext, useContext, useReducer } from "react";
 
 import { initialState, reducer } from "./reducer.js";
 
@@ -25,18 +20,35 @@ const ContextProvider = ({ children }) => {
     });
   };
 
+  const switchThemeLight = () => {
+    dispatch({
+      type: "SET_THEME_LIGHT",
+      payload: "light",
+    });
+  };
+
+  const switchThemeDark = () => {
+    dispatch({
+      type: "SET_THEME_DARK",
+      payload: "dark",
+    });
+  };
+
   useEffect(() => {
     getDataDentistList();
-  }, [])
+  }, []);
 
   return (
     <ContextGlobal.Provider
       value={{
         dataDentist: state.dataDentist,
+        globalTheme: state.theme,
         getDataDentistList,
+        switchThemeLight,
+        switchThemeDark,
       }}
     >
-      {children}
+      <div className={`${state.theme}`}>{children}</div>
     </ContextGlobal.Provider>
   );
 };

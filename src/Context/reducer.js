@@ -1,6 +1,6 @@
 export const initialState = {
   dataDentist: [],
-  theme: "light",
+  theme: true,
 };
 
 export const types = {

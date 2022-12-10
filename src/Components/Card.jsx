@@ -1,7 +1,10 @@
 import React from "react";
 import styles from "./Card.module.css";
 
+import { useContextGlobal } from "../Context/ContextGlobal";
+
 const Card = ({ Dentist }) => {
+  const { globalTheme } = useContextGlobal();
   function handleClickFav() {
     if (localStorage.getItem('favs')) {
       let localStrg = JSON.parse(localStorage.getItem('favs'));
@@ -19,7 +22,7 @@ const Card = ({ Dentist }) => {
 
   return (
     <>
-      <div className={`card`}>
+      <div className={`card ${globalTheme} `}>
         <img
           className="card-img-top"
           src="/images/doctor.jpg"

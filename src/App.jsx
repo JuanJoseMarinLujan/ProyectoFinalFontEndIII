@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 
+import { useContextGlobal } from "./Context/ContextGlobal";
+
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { globalTheme } = useContextGlobal();
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -15,7 +19,7 @@ function App() {
 
   return (
     <>
-      <div className={`app light}`}>
+      <div className={`app ${globalTheme}}`}>
         <Navbar />
         <main>
           <Outlet />

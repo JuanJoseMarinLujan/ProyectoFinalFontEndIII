@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styles from "./Navbar.module.css";
 
+import { useContextGlobal } from "../Context/ContextGlobal";
+
 const Navbar = () => {
+  const [theme, setTheme] = useState(true);
+  const { switchThemeLight, switchThemeDark, globalTheme } = useContextGlobal();
+
+  function switchTheme() {
+    if (theme === true) {
+      switchThemeLight();
+      setTheme(false);
+      console.log(theme);
+      console.log(globalTheme);
+    } else {
+      switchThemeDark();
+      setTheme(true);
+      console.log(theme);
+      console.log(globalTheme);
+    }
+  }
+
   return (
     <header className="sticky-top">
       <nav
-        className={`navbar navbar-expand-sm navbar-light bg-light }`}
+        className={`navbar navbar-expand-sm navbar-${globalTheme} bg-${globalTheme} }`}
         aria-label="Third navbar example"
       >
         <div className="container">
@@ -47,7 +66,8 @@ const Navbar = () => {
               </li>
               <li className={`nav-item`}>
                 <button
-                  className={`btn btn-light}${styles.btnStyle}`}
+                  className={`btn btn-${globalTheme}}${styles.btnStyle}`}
+                  onClick={() => switchTheme()}
                 >
                   ☀ 🌙{" "}
                 </button>
