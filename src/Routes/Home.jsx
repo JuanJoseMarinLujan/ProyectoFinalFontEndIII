@@ -1,19 +1,18 @@
-import { useEffect } from "react";
+import React from "react";
 import Card from "../Components/Card";
 
-const Home = () => {
+import { useContextGlobal } from "../Context/ContextGlobal";
 
-  useEffect(() => {
-    //Nesse useEffect, deverá ser obtido todos os dentistas da API
-    //Armazena-los em um estado para posteriormente fazer um map
-    //Usando o componente <Card />
-  }, []);
+const Home = () => {
+  const { dataDentist } = useContextGlobal();
 
   return (
     <>
       <h1>Home</h1>
-      <div className="card-grid container">
-        <Card />
+      <div className="card-grid container ">
+        {dataDentist.map((dentist) => {
+          return <Card Dentist={dentist} key={dentist.id} />;
+        })}
       </div>
     </>
   );

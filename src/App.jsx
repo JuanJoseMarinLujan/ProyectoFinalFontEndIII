@@ -1,14 +1,25 @@
-
-import { Outlet } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 
+import { useContextGlobal } from "./Context/ContextGlobal";
+
 function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const { globalTheme } = useContextGlobal();
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      navigate("/home");
+    }
+  });
+
   return (
     <>
-      {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-        // está em dark mode e deverá utilizar a classe dark ou light */}
-      <div className={`app light}`}>
+      <div className={`app ${globalTheme}}`}>
         <Navbar />
         <main>
           <Outlet />

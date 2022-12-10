@@ -1,23 +1,39 @@
+import React from "react";
 import styles from "./Card.module.css";
 
-const Card = () => {
+import { useContextGlobal } from "../Context/ContextGlobal";
+
+const Card = ({ Dentist }) => {
+  const { globalTheme } = useContextGlobal();
+  function handleClickFav() {
+    if (localStorage.getItem('favs')) {
+      let localStrg = JSON.parse(localStorage.getItem('favs'));
+      if (localStrg.find((e) => e.id === Dentist.id)) {
+        return
+      } else {
+        localStrg.push(Dentist);
+        localStorage.setItem('favs', JSON.stringify(localStrg));
+      }
+      console.log(localStrg);
+    } else {
+      localStorage.setItem('favs', JSON.stringify([Dentist]));
+    }
+  }
 
   return (
     <>
-      {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-        // está em dark mode e deverá utilizar o css correto */}
-      <div className={`card`}>
+      <div className={`card ${globalTheme} `}>
         <img
           className="card-img-top"
           src="/images/doctor.jpg"
           alt="doctor placeholder"
         />
         <div className={`card-body ${styles.CardBody}`}>
-          {/* Na linha seguinte o link deverá utilizar a matricula, nome e sobrenome do dentista
-          que vem da API */}
-          <a href={`/dentist/MatriculaDoDentista`}>
-            <h5 className={`card-title ${styles.title}`}>Nome e Sobrenome do dentista</h5>
+          <a href={`/dentist/${Dentist.id}`}>
+            <h5 className={`card-title ${styles.title}`}>{Dentist.name}</h5>
           </a>
+          <p>{Dentist.username}</p>
+          <button onClick={handleClickFav}>⭐</button>
         </div>
       </div>
     </>
